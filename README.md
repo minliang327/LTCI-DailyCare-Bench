@@ -1,58 +1,58 @@
 # Green Agent Benchmark
 
-用于评估医疗保健代理生成老年人日常护理计划的基准测试系统。
+A benchmark system for evaluating healthcare agents that generate daily care plans for elderly individuals.
 
-## 项目概述
+## Project Overview
 
-本项目是一个Python基准测试框架，用于评估基于长期护理保险（LTCI）评估生成日常护理计划的医疗保健代理。系统通过以下维度评估护理计划的质量：
+This project is a Python benchmark framework for assessing healthcare agents that generate daily care plans based on Long-Term Care Insurance (LTCI) assessments. The system evaluates the quality of care plans across the following dimensions:
 
-- **强制性任务覆盖率** (50%): 检查代理是否包含了评估规则要求的必需任务
-- **安全约束** (20%): 检查代理是否避免了禁忌任务
-- **时长合理性** (30%): 检查总服务时长是否在合理范围内（100-140分钟）
-- **资质匹配**: 检查任务是否分配给了具备相应资质的护理人员
+- **Mandatory Task Coverage** (50%): Checks whether the agent includes all required tasks according to the assessment rules.
+- **Safety Constraints** (20%): Checks whether the agent avoids prohibited tasks.
+- **Duration Reasonableness** (30%): Checks if the total service duration is within a reasonable range (100–140 minutes).
+- **Qualification Matching**: Checks whether tasks are assigned to caregivers with the appropriate qualifications.
 
-## 项目结构
+## Project Structure
 
 ```
 green_agent_benchmark/
-├── models.py          # Pydantic数据模型
-├── database.py        # 硬编码的任务列表和评估规则
-├── evaluator.py       # 核心评估逻辑
-├── generator.py       # 基线代理生成器
-├── main.py            # CLI主程序
-├── requirements.txt   # Python依赖
-├── Dockerfile         # Docker部署文件
-└── README.md          # 项目文档
+├── models.py          # Pydantic data models
+├── database.py        # Hardcoded task list and assessment rules
+├── evaluator.py       # Core evaluation logic
+├── generator.py       # Baseline agent generator
+├── main.py            # CLI main program
+├── requirements.txt   # Python dependencies
+├── Dockerfile         # Docker deployment file
+└── README.md          # Project documentation
 ```
 
-## 安装
+## Installation
 
-### 使用pip安装依赖
+### Install dependencies with pip
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 使用Docker
+### Using Docker
 
 ```bash
 docker build -t green-agent-benchmark .
 docker run green-agent-benchmark
 ```
 
-## 使用方法
+## Usage
 
-### 1. 演示模式（默认）
+### 1. Demo Mode (default)
 
-运行示例评估和计划生成：
+Run a demonstration evaluation and plan generation:
 
 ```bash
 python main.py --mode demo
 ```
 
-### 2. 评估模式
+### 2. Evaluation Mode
 
-评估一个护理计划：
+Evaluate a care plan:
 
 ```bash
 python main.py --mode evaluate \
@@ -61,9 +61,9 @@ python main.py --mode evaluate \
     --output result.json
 ```
 
-### 3. 生成模式
+### 3. Generation Mode
 
-基于评估数据生成基线护理计划：
+Generate a baseline care plan based on assessment data:
 
 ```bash
 python main.py --mode generate \
@@ -71,9 +71,9 @@ python main.py --mode generate \
     --output plan.json
 ```
 
-## 数据格式
+## Data Formats
 
-### 评估输入 (AssessmentInput)
+### Assessment Input (AssessmentInput)
 
 ```json
 {
@@ -91,7 +91,7 @@ python main.py --mode generate \
 }
 ```
 
-### 护理计划 (DailyPlan)
+### Daily Care Plan (DailyPlan)
 
 ```json
 {
@@ -109,7 +109,7 @@ python main.py --mode generate \
 }
 ```
 
-### 评估结果 (ScoreResult)
+### Evaluation Result (ScoreResult)
 
 ```json
 {
@@ -131,35 +131,36 @@ python main.py --mode generate \
 }
 ```
 
-## 评估规则
+## Evaluation Rules
 
-系统包含42个护理任务和多个评估规则映射。主要规则包括：
+The system includes 42 care tasks and multiple assessment rule mappings. Major rules include:
 
-- **饮食习惯**: 低糖/无糖 → 需要任务7（协助进食/水）和任务36（饮食指导）
-- **跌倒风险**: 需要任务23（安全防护）和任务21（协助行走）
-- **行动能力**: 完全不能 → 需要任务11（协助翻身）、13（协助床上移动）、19（协助上下床）
-- **如厕能力**: 完全不能 → 需要任务14（人工取便）和任务16（协助使用便器）
+- **Dietary Habit**:  Low-sugar/sugar-free → requires tasks 7 (Assistance with eating/drinking) and 36 (Diet guidance)
+- **Fall Risk**: Requires tasks 23 (Safety protection) and 21 (Assistance with walking)
+- **Mobility**: Completely unable → requires tasks 11 (Assistance with turning), 13 (Assistance in-bed movement), 19 (Assistance with bed transfer)
+- **Toileting Ability**: Completely unable → requires tasks 14 (Manual toileting) and 16 (Assistance with commode)
 
-完整规则列表请参考 `database.py` 中的 `ASSESSMENT_RULES`。
+For the full rule list, see ASSESSMENT_RULES in database.py.
 
-## 评分标准
+## Scoring Criteria
 
-- **总分计算**: 
+- **Total Score Calculation**: 
   ```
-  总分 = 强制性任务得分 × 0.5 + 时长得分 × 0.3 + 安全约束得分 × 0.2
+  Total Score = Mandatory Task Score × 0.5 + Duration Score × 0.3 + Safety Constraint Score × 0.2
   ```
-  如果有资质问题，会额外扣分（最多20%）
+  Qualification issues will incur additional deductions (up to 20%).
 
-- **通过标准**: 
-  - 总分 >= 0.8
-  - 无安全约束违规
-  - 无资质不匹配问题
+- **Passing Criteria**: 
+  - Total score >= 0.8
+  - No safety violations
+  - No qualification mismatches
 
-## 开发说明
 
-### 添加新任务
+## Development Notes
 
-在 `database.py` 的 `SERVICE_TASKS` 字典中添加新任务：
+### Adding New Tasks
+
+Add new tasks to the SERVICE_TASKS dictionary in database.py:
 
 ```python
 43: {
@@ -170,9 +171,9 @@ python main.py --mode generate \
 }
 ```
 
-### 添加新规则
+### Adding New Rules
 
-在 `database.py` 的 `ASSESSMENT_RULES` 字典中添加新规则：
+Add new rules to the ASSESSMENT_RULES dictionary in database.py:
 
 ```python
 "新条件: 值": [7, 36]  # 需要任务7和36（AND关系）
@@ -180,7 +181,7 @@ python main.py --mode generate \
 "新条件: 值": {9, 15}  # 需要任务9或15（OR关系）
 ```
 
-### 自定义评估器权重
+### Customizing Evaluator Weights
 
 ```python
 evaluator = GreenAgentEvaluator(
@@ -190,6 +191,6 @@ evaluator = GreenAgentEvaluator(
 )
 ```
 
-## 许可证
+## License
 
 MIT License
