@@ -1,0 +1,23 @@
+{
+  "assessment_id": "ASSESS_001",
+  "patient_info": {
+    "name": "张先生",
+    "age": 75,
+    "gender": "男"
+  },
+  "assessment_data": {
+    "饮食习惯": "低糖或无糖",
+    "衣着整洁": 3,
+    "B卷-过敏情况": "食物过敏",
+    "B卷-跌倒风险": true,
+    "行动能力": "部分不能",
+    "如厕能力": "部分不能",
+    "洗浴能力": "完全不能",
+    "留置尿管": "否",
+    "需要监测血糖": true
+  },
+  "eating_habits": "低糖或无糖",
+  "clothing_neatness": 3,
+  "allergy_info": "食物过敏",
+  "fall_risk": true
+}

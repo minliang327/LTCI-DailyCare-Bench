@@ -1,0 +1,94 @@
+{
+  "date": "2024-01-01",
+  "tasks": [
+    {
+      "task_id": 1,
+      "name": "头面部清洁",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "协助患者清洁头面部",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 3,
+      "name": "口腔清洁",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "协助患者清洁口腔",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 7,
+      "name": "协助进食/水",
+      "min_duration": 15,
+      "qualification": "Any",
+      "content": "协助患者进食或饮水",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 9,
+      "name": "协助穿脱衣",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "协助患者穿脱衣物",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 15,
+      "name": "协助如厕",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "协助患者如厕",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 21,
+      "name": "协助行走",
+      "min_duration": 15,
+      "qualification": "Any",
+      "content": "协助患者行走",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 23,
+      "name": "安全防护",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "安全防护措施",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 24,
+      "name": "协助洗浴",
+      "min_duration": 30,
+      "qualification": "Any",
+      "content": "协助患者洗浴",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 28,
+      "name": "协助使用助行器",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "协助患者使用助行器",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 32,
+      "name": "协助测量血糖",
+      "min_duration": 10,
+      "qualification": "Nurse",
+      "content": "测量血糖（需护士）",
+      "assigned_to": "Nurse"
+    },
+    {
+      "task_id": 36,
+      "name": "饮食指导",
+      "min_duration": 10,
+      "qualification": "Any",
+      "content": "提供饮食指导",
+      "assigned_to": "Caregiver"
+    }
+  ],
+  "total_duration": 140
+}
