@@ -1,94 +1,167 @@
 {
-  "date": "2024-01-01",
+  "date": "2026-01-15",
+  "assessment_id": "ASSESS_001",
   "tasks": [
     {
       "task_id": 1,
-      "name": "头面部清洁",
+      "name": "Head and face cleaning and grooming",
       "min_duration": 10,
       "qualification": "Any",
-      "content": "协助患者清洁头面部",
+      "content": "Clean face, comb hair, shave",
       "assigned_to": "Caregiver"
     },
     {
       "task_id": 3,
-      "name": "口腔清洁",
+      "name": "Nail care",
       "min_duration": 10,
       "qualification": "Any",
-      "content": "协助患者清洁口腔",
+      "content": "Trim fingernails/toenails, treat onychomycosis",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 4,
+      "name": "Hand and foot cleaning",
+      "min_duration": 15,
+      "qualification": "Any",
+      "content": "Wash hands and feet",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 5,
+      "name": "Warm water bath",
+      "min_duration": 30,
+      "qualification": "Any",
+      "content": "Full body warm water bath",
       "assigned_to": "Caregiver"
     },
     {
       "task_id": 7,
-      "name": "协助进食/水",
+      "name": "Assist with eating/drinking",
       "min_duration": 15,
       "qualification": "Any",
-      "content": "协助患者进食或饮水",
+      "content": "Assist with eating and drinking",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 8,
+      "name": "Oral care",
+      "min_duration": 15,
+      "qualification": "Any",
+      "content": "Brush teeth, rinse mouth, clean oral cavity",
       "assigned_to": "Caregiver"
     },
     {
       "task_id": 9,
-      "name": "协助穿脱衣",
-      "min_duration": 10,
+      "name": "Dressing and undressing",
+      "min_duration": 15,
       "qualification": "Any",
-      "content": "协助患者穿脱衣物",
+      "content": "Assist with dressing and undressing",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 10,
+      "name": "Bed making",
+      "min_duration": 20,
+      "qualification": "Any",
+      "content": "Change bed sheets and covers",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 11,
+      "name": "Bowel and bladder care",
+      "min_duration": 20,
+      "qualification": "Any",
+      "content": "Assist with elimination, use bedpan",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 12,
+      "name": "Incontinence care",
+      "min_duration": 20,
+      "qualification": "Any",
+      "content": "Skin cleaning and care after incontinence",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 13,
+      "name": "Constipation care",
+      "min_duration": 20,
+      "qualification": "Any",
+      "content": "Non-invasive measures to relieve constipation",
       "assigned_to": "Caregiver"
     },
     {
       "task_id": 15,
-      "name": "协助如厕",
-      "min_duration": 10,
+      "name": "Daily personal hygiene assistance",
+      "min_duration": 15,
       "qualification": "Any",
-      "content": "协助患者如厕",
+      "content": "Daily grooming such as washing face and hands",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 16,
+      "name": "Sleep and environment care",
+      "min_duration": 15,
+      "qualification": "Any",
+      "content": "Positioning, adjust environment",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 18,
+      "name": "Medication management",
+      "min_duration": 15,
+      "qualification": "Any",
+      "content": "Guide or manage medications",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 19,
+      "name": "Turning and back tapping",
+      "min_duration": 20,
+      "qualification": "Any",
+      "content": "Turn patient, tap back to expectorate",
+      "assigned_to": "Caregiver"
+    },
+    {
+      "task_id": 20,
+      "name": "Sitting and mobility assistance",
+      "min_duration": 20,
+      "qualification": "Any",
+      "content": "Assist bedridden patients to sit up or move",
       "assigned_to": "Caregiver"
     },
     {
       "task_id": 21,
-      "name": "协助行走",
-      "min_duration": 15,
+      "name": "Walking and stair climbing",
+      "min_duration": 20,
       "qualification": "Any",
-      "content": "协助患者行走",
+      "content": "Assist with walking on level ground or climbing stairs",
       "assigned_to": "Caregiver"
     },
     {
       "task_id": 23,
-      "name": "安全防护",
-      "min_duration": 10,
+      "name": "Cognitive function support and companionship",
+      "min_duration": 20,
       "qualification": "Any",
-      "content": "安全防护措施",
+      "content": "Communication, cognitive training",
       "assigned_to": "Caregiver"
     },
     {
-      "task_id": 24,
-      "name": "协助洗浴",
-      "min_duration": 30,
+      "task_id": 25,
+      "name": "Pressure ulcer prevention care",
+      "min_duration": 20,
       "qualification": "Any",
-      "content": "协助患者洗浴",
+      "content": "Turn patient, check high-risk areas",
       "assigned_to": "Caregiver"
-    },
-    {
-      "task_id": 28,
-      "name": "协助使用助行器",
-      "min_duration": 10,
-      "qualification": "Any",
-      "content": "协助患者使用助行器",
-      "assigned_to": "Caregiver"
-    },
-    {
-      "task_id": 32,
-      "name": "协助测量血糖",
-      "min_duration": 10,
-      "qualification": "Nurse",
-      "content": "测量血糖（需护士）",
-      "assigned_to": "Nurse"
     },
     {
       "task_id": 36,
-      "name": "饮食指导",
+      "name": "Blood glucose monitoring",
       "min_duration": 10,
       "qualification": "Any",
-      "content": "提供饮食指导",
+      "content": "Fingerstick blood glucose testing",
       "assigned_to": "Caregiver"
     }
   ],
-  "total_duration": 140
+  "total_duration": 360
 }
