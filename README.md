@@ -1,4 +1,6 @@
 # Green Agent Benchmark
+[![Docker Image](https://img.shields.io/docker/pulls/liangmin0327/ltci-dailycare-bench.svg)](https://hub.docker.com/r/liangmin0327/ltci-dailycare-bench)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A benchmark system for evaluating healthcare agents that generate daily care plans for elderly individuals.
 
