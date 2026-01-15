@@ -1,23 +1,110 @@
 {
   "assessment_id": "ASSESS_001",
+  "meta": {
+    "timestamp": "2026-01-15T10:00:00Z",
+    "evaluator_id": "NURSE_007",
+    "language": "en_US"
+  },
   "patient_info": {
-    "name": "张先生",
+    "name": "Mr. Zhang",
     "age": 75,
-    "gender": "男"
+    "gender": "Male"
   },
+  
   "assessment_data": {
-    "饮食习惯": "低糖或无糖",
-    "衣着整洁": 3,
-    "B卷-过敏情况": "食物过敏",
-    "B卷-跌倒风险": true,
-    "行动能力": "部分不能",
-    "如厕能力": "部分不能",
-    "洗浴能力": "完全不能",
-    "留置尿管": "否",
-    "需要监测血糖": true
-  },
-  "eating_habits": "低糖或无糖",
-  "clothing_neatness": 3,
-  "allergy_info": "食物过敏",
-  "fall_risk": true
+    "risk_flags": {
+      "fall_risk": true,
+      "suicide_risk": false,
+      "wandering_risk": false,
+      "allergy_info": "Seafood allergy"
+    },
+
+    "I_home_info": {
+      "dietary_habits": ["Low Sugar/Sugar Free", "Low Salt"],
+      "clothing_neatness": 2
+    },
+
+    "II_basic_adl": {
+      "bed_turning": 3,
+      "bed_sitting_up": 3,
+      "sitting_chair": 2,
+      "standing_up": 3,
+      "standing_balance_10s": 3,
+      "walking_5m": 3,
+      "position_change": 3,
+      "eating": 2,
+      "brushing_teeth": 2,
+      "washing_face_hands": 2,
+      "grooming": 3,
+      "dressing_upper": 3,
+      "dressing_lower": 4,
+      "bathing": 4,
+      
+      "urination": {
+        "assistance_level": 3,
+        "incontinence": "Occasional"
+      },
+      "defecation": {
+        "assistance_level": 3,
+        "incontinence": "None",
+        "constipation": true
+      }
+    },
+
+    "II_sensory_physical": {
+      "vision": 2,
+      "hearing": 2,
+      "paralysis_sites": ["Left Lower Limb"],
+      "joint_limitations": ["Knee Joint"],
+      "telephone_use": "Can answer only"
+    },
+
+    "II_cognitive_status": {
+      "knows_name": true,
+      "knows_age": true,
+      "knows_season": true,
+      "recall_immediate_count": 3,
+      "orientation_time_count": 4,
+      "orientation_place_count": 3,
+      "calculation_count": 2,
+      "recall_delayed_count": 1
+    },
+
+    "II_emotional_social": {
+      "feeling_useful": 2,
+      "feeling_fatigue": 4,
+      "interest_level": 2,
+      "agitation_anger": 2,
+      "sleep_quality": 3,
+      "self_health_perception": 4
+    },
+
+    "II_iadl": {
+      "cooking": 4,
+      "housework": 4,
+      "stair_climbing": 3,
+      "outdoor_frequency": 4,
+      "getting_lost": "Rarely",
+      "outdoor_mobility_3km": 4,
+      "shopping": 3,
+      "money_management": 3,
+      "medication_management": 2
+    },
+
+    "II_behavioral_symptoms": {
+      "obsessive_behavior": 1,
+      "destructive_behavior": 1,
+      "aggressive_behavior": 1,
+      "wandering_behavior": 1,
+      "resistance_to_care": 2,
+      "crying_spells": 1,
+      "excessive_fear": 2,
+      "hallucinations": 1
+    },
+
+    "III_overall_status": {
+      "judgment_ability": 3,
+      "communication_ability": 2
+    }
+  }
 }
