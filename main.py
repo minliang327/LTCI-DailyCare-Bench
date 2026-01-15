@@ -1,5 +1,5 @@
 """
-Green Agent Benchmark 主程序 (修复版 + 标准答案解析)
+Green Agent Benchmark Main Program (Fixed Version + Standard Answer Analysis)
 """
 import json
 import argparse
@@ -9,7 +9,7 @@ from evaluator import GreenAgentEvaluator
 from generator import BaselineGenerator
 from database import get_required_tasks, get_task_info, ASSESSMENT_RULES
 
-# 尝试导入坏生成器
+# Try to import bad generator
 try:
     from bad_generator import generate_bad_plan
     HAS_BAD_GENERATOR = True
@@ -29,45 +29,56 @@ def load_plan_from_json(file_path: str) -> DailyPlan:
 def create_sample_assessment() -> AssessmentInput:
     return AssessmentInput(
         assessment_id="ASSESS_001",
-        patient_info={"name": "张先生", "age": 75, "gender": "男"},
+        patient_info={"name": "Mr. Zhang", "age": 75, "gender": "Male"},
         assessment_data={
-            "饮食习惯": "低糖或无糖",
-            "衣着整洁": 3,
-            "过敏情况": "食物过敏",
-            "跌倒风险": True,
-            "行动能力": "部分不能",
-            "如厕能力": "部分不能",
-            "洗浴能力": "完全不能",
-            "留置尿管": "否",
-            "需要监测血糖": True
+            "Dietary habit: Low sugar or sugar-free": True,
+            "Clothing cleanliness: Poor": True,
+            "Allergy: Food allergy": True,
+            "Fall risk": True,
+            "Mobility: Partially unable": True,
+            "Toileting ability: Partially unable": True,
+            "Bathing ability: Completely unable": True,
+            "Indwelling catheter: No": False,
+            "Need blood glucose monitoring": True
         },
-        eating_habits="低糖或无糖",
-        clothing_neatness=3,
-        allergy_info="食物过敏",
+        eating_habits="Low sugar or sugar-free",
+        clothing_neatness=2,
+        allergy_info="Food allergy",
         fall_risk=True
     )
 
-def print_ground_truth(assessment: AssessmentInput):
-    """【新功能】打印标准答案解析：显示评估单触发了哪些规则"""
+def print_assessment_items(assessment: AssessmentInput):
+    """Step 1: Print all assessment items selected in the assessment form"""
     print("\n" + "="*60)
-    print("🔍 标准答案解析 (Ground Truth Analysis)")
+    print("📋 Step 1: Assessment Form - All Selected Items")
     print("="*60)
-    print("根据评估单数据，Green Agent 推导出的【必须执行任务】如下：")
+    print(f"Assessment ID: {assessment.assessment_id}")
+    if assessment.patient_info:
+        print(f"Patient: {assessment.patient_info.get('name', 'N/A')}, "
+              f"Age: {assessment.patient_info.get('age', 'N/A')}, "
+              f"Gender: {assessment.patient_info.get('gender', 'N/A')}")
+    print("\nAssessment Data Items:")
+    for key, value in assessment.assessment_data.items():
+        if value is True or (isinstance(value, (str, int, float)) and value):
+            print(f"  ✓ {key}: {value}")
+    print("="*60 + "\n")
+
+def print_ground_truth(assessment: AssessmentInput):
+    """Step 3: Print ground truth analysis - show which rules are triggered"""
+    print("\n" + "="*60)
+    print("🔍 Step 3: Ground Truth Analysis")
+    print("="*60)
+    print("Based on the assessment data, the following mandatory tasks are required:")
     
-    # 1. 遍历评估单中的所有键值对
-    # 注意：这里我们简化处理，直接用 assessment_data 来匹配 database 里的规则
     triggered_rules = []
     
-    # 检查 assessment_data 里的每一项
+    # Check each item in assessment_data
     for key, value in assessment.assessment_data.items():
-        # 构造可能的查询条件，例如 "跌倒风险" 或 "饮食习惯: 低糖"
-        # 简单逻辑：检查 key 是否在规则库，或者 "key: value" 是否在规则库
-        
-        # 尝试匹配 "Key: Value" 格式 (例如 "饮食习惯: 低糖或无糖")
+        # Try to match "Key: Value" format (e.g., "Dietary habit: Low sugar or sugar-free")
         condition_str = f"{key}: {value}"
         required_ids = get_required_tasks(condition_str)
         
-        # 如果没匹配到，尝试匹配 Key (例如 "跌倒风险" 为 True 时)
+        # If not matched, try matching Key (e.g., "Fall risk" when value is True)
         if not required_ids and value is True:
             required_ids = get_required_tasks(key)
             
@@ -75,71 +86,110 @@ def print_ground_truth(assessment: AssessmentInput):
             task_names = []
             for tid in required_ids:
                 info = get_task_info(tid)
-                task_names.append(f"[{tid}]{info.get('name', '未知')}")
+                task_names.append(f"[{tid}] {info.get('name', 'Unknown')}")
             
-            print(f"  • 检测到 '{key}: {value}'")
-            print(f"    -> 触发规则，要求任务: {', '.join(task_names)}")
+            print(f"  • Detected '{key}: {value}'")
+            print(f"    -> Triggered rule, required tasks: {', '.join(task_names)}")
+            triggered_rules.append((key, value, required_ids))
 
+    if not triggered_rules:
+        print("  (No rules triggered from assessment data)")
+    
     print("="*60 + "\n")
 
-def print_result(result: ScoreResult, title="评估结果"):
-    print("\n" + "-"*60)
+def print_result(result: ScoreResult, title="Step 4: Evaluation Result"):
+    print("\n" + "="*60)
     print(title)
-    print("-"*60)
-    print(f"总分: {result.overall_score:.3f} ({'通过' if result.passed else '未通过'})")
-    print(f"明细: 覆盖率 {result.breakdown.mandatory_coverage:.0%} | 安全 {result.breakdown.safety_score} | 资质 {result.breakdown.qualification_score}")
+    print("="*60)
+    print(f"Overall Score: {result.overall_score:.3f} ({'PASSED' if result.passed else 'FAILED'})")
+    print(f"Breakdown: Coverage {result.breakdown.mandatory_coverage:.0%} | "
+          f"Safety {result.breakdown.safety_score:.3f} | "
+          f"Qualification {result.breakdown.qualification_score:.3f} | "
+          f"Duration {result.breakdown.duration_score:.3f}")
     
     if result.breakdown.mandatory_missing:
-        print(f"\n[!] 缺失任务: {result.breakdown.mandatory_missing}")
+        print(f"\n[!] Missing Mandatory Tasks: {result.breakdown.mandatory_missing}")
     if result.breakdown.safety_violations:
-        print(f"\n[!] 安全违规: {result.breakdown.safety_violations}")
+        print(f"\n[!] Safety Violations: {result.breakdown.safety_violations}")
     if result.breakdown.qualification_issues:
-        print(f"\n[!] 资质违规:")
+        print(f"\n[!] Qualification Issues:")
         for issue in result.breakdown.qualification_issues:
-            print(f"    任务{issue['task_id']} 需要 {issue['required']}, 实际 {issue['assigned']}")
-    print("-"*60 + "\n")
+            print(f"    Task {issue['task_id']} requires {issue['required']}, but assigned to {issue['assigned']}")
+    if result.warnings:
+        print(f"\n[⚠] Warnings:")
+        for warning in result.warnings:
+            print(f"    {warning}")
+    if result.errors:
+        print(f"\n[❌] Errors:")
+        for error in result.errors:
+            print(f"    {error}")
+    print("="*60 + "\n")
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=["demo", "evaluate", "generate"], default="demo")
-    parser.add_argument("--assessment", type=str)
-    parser.add_argument("--plan", type=str)
-    parser.add_argument("--output", type=str)
+    parser = argparse.ArgumentParser(description="Green Agent Benchmark - Main Program")
+    parser.add_argument("--mode", choices=["demo", "evaluate", "generate"], default="demo",
+                       help="Operation mode: demo, evaluate, or generate")
+    parser.add_argument("--assessment", type=str, help="Path to assessment JSON file")
+    parser.add_argument("--plan", type=str, help="Path to plan JSON file")
+    parser.add_argument("--output", type=str, help="Path to output JSON file")
     args = parser.parse_args()
     
     if args.mode == "demo":
-        print("Green Agent Benchmark - 演示模式\n")
+        print("Green Agent Benchmark - Demo Mode\n")
         assessment = create_sample_assessment()
         
-        # 【新增】打印标准答案解析，满足你的需求
-        print_ground_truth(assessment)
+        # Step 1: Print all assessment items
+        print_assessment_items(assessment)
         
-        # 1. Good Agent
-        print("🤖 测试 1: 基准生成器 (Good Agent)...")
+        # Step 2: Generate plan (evaluation happens here)
+        print("="*60)
+        print("📝 Step 2: Plan Generation & Evaluation")
+        print("="*60)
+        print("🤖 Testing: Baseline Generator (Good Agent)...\n")
         generator = BaselineGenerator(target_duration=120)
         plan = generator.generate_perfect_plan(assessment)
         evaluator = GreenAgentEvaluator()
         result = evaluator.evaluate(assessment, plan)
-        print_result(result, title="✅ Good Agent 结果")
+        
+        # Step 3: Ground truth analysis
+        print_ground_truth(assessment)
+        
+        # Step 4: Evaluation result
+        print_result(result, title="Step 4: Evaluation Result - Good Agent")
 
-        # 2. Bad Agent
+        # Bad Agent test (if available)
         if HAS_BAD_GENERATOR:
-            print("🤖 测试 2: 对抗性测试 (Bad Agent)...")
+            print("\n" + "="*60)
+            print("🤖 Testing: Adversarial Test (Bad Agent)...")
+            print("="*60 + "\n")
             bad_plan = generate_bad_plan(assessment)
             bad_score = evaluator.evaluate(assessment, bad_plan)
-            print_result(bad_score, title="❌ Bad Agent 结果 (成功拦截)")
+            print_result(bad_score, title="Step 4: Evaluation Result - Bad Agent (Successfully Intercepted)")
     
     elif args.mode == "evaluate":
         assessment = load_assessment_from_json(args.assessment)
         plan = load_plan_from_json(args.plan)
-        # 评估模式也打印解析
-        print_ground_truth(assessment)
+        
+        # Step 1: Print all assessment items
+        print_assessment_items(assessment)
+        
+        # Step 2: Evaluation
+        print("="*60)
+        print("📝 Step 2: Plan Evaluation")
+        print("="*60 + "\n")
         evaluator = GreenAgentEvaluator()
         result = evaluator.evaluate(assessment, plan)
+        
+        # Step 3: Ground truth analysis
+        print_ground_truth(assessment)
+        
+        # Step 4: Evaluation result
         print_result(result)
+        
         if args.output:
             with open(args.output, 'w', encoding='utf-8') as f:
                 json.dump(result.model_dump(), f, ensure_ascii=False, indent=2)
+            print(f"Result saved to: {args.output}")
 
     elif args.mode == "generate":
         assessment = load_assessment_from_json(args.assessment)
