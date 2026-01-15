@@ -10,7 +10,7 @@
 
 ---
 
-## 📺 [Click here to watch the Demo Video]((https://youtu.be/SAnAGBHwRKY?si=gnzzedJXjxE8G-jS))
+## 📺 [Click here to watch the Demo Video](https://youtu.be/SAnAGBHwRKY?si=gnzzedJXjxE8G-jS)
 
 ---
 
