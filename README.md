@@ -8,8 +8,7 @@
 
 **A deterministic, rule-based benchmark system for evaluating Healthcare AI Agents in generating elderly care plans.**
 
----
-
+**🚨 Platform Status Note:** The AgentBeats live leaderboard is currently experiencing high latency/timeout errors. Please refer to our Demo Video Here for verified, reproducible assessment results (Score: 1.0).
 ## 📺 [Click here to watch the Demo Video](https://youtu.be/SAnAGBHwRKY?si=gnzzedJXjxE8G-jS)
 
 ---
